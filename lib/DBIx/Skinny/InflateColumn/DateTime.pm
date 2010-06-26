@@ -2,7 +2,7 @@ package DBIx::Skinny::InflateColumn::DateTime;
 
 use strict;
 use warnings;
-our $VERSION = '0.05';
+our $VERSION = '0.06';
 
 use DateTime;
 use DateTime::Format::Strptime;
@@ -10,9 +10,12 @@ use DateTime::Format::MySQL;
 use DateTime::TimeZone;
 
 sub import {
-    my $timezone = DateTime::TimeZone->new(name => 'local');
+    my $class = shift;
+    my %args = @_;
+    my $timezone = $args{time_zone} || DateTime::TimeZone->new(name => 'local');
+    my @rules    = @{ $args{rules} || [qr/^.+_at$/, qr/^.+_on$/] };
     my $schema = caller;
-    for my $rule ( qw(^.+_at$ ^.+_on$) ) {
+    for my $rule ( @rules ) {
         $schema->inflate_rules->{ $rule }->{ inflate } = sub {
             my $value = shift or return;
             return $value if ref $value eq 'DateTime';
@@ -71,9 +74,28 @@ This module installs inflate rule for /_(at|on)$/ columns.
 
 That columns will be inflated as DateTime objects.
 
-=head1 AUTHOR
+=head1 OPTIONS
 
-Ryo Miyake E<lt>ryo.studiom {at} gmail.comE<gt>
+=head2 time_zone
+
+default time_zone is 'local'.
+
+set this option if you decide other time_zone.
+
+Example:
+
+  use DBIx::Skinny::InflateColumn::DateTime (time_zone => DateTime::TimeZone->new(name => 'Asia/Tokyo'));
+
+
+=head2 rules
+
+default rules is [qr/^.+_at$/, qr/^.+_on$/].
+
+set this option if you decide other rules.
+
+Example:
+
+  use DBIx::Skinny::InflateColumn::DateTime (rules => [qr/^created$/, qr/^updated$/]);
 
 =head1 SEE ALSO
 
@@ -82,6 +104,10 @@ DBIx::Skinny, DBIx::Class::InflateColumn::DateTime
 =head1 AUTHOR
 
 Ryo Miyake  C<< <ryo.studiom __at__ gmail.com> >>
+
+=head1 SPECIAL THANKS
+
+nihen : Masahiro Chiba
 
 =head1 LICENSE
 

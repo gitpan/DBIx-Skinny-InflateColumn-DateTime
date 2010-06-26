@@ -1,7 +1,7 @@
 ---
 abstract: 'DateTime inflate/deflate settings for DBIx::Skinny'
 author:
-  - 'Ryo Miyake <ryo.studiom {at} gmail.com>'
+  - 'Ryo Miyake  C<< <ryo.studiom __at__ gmail.com> >>'
 build_requires:
   ExtUtils::MakeMaker: 6.42
   Test::More: 0
@@ -29,4 +29,4 @@ requires:
   Filter::Util::Call: 0
 resources:
   license: http://dev.perl.org/licenses/
-version: 0.05
+version: 0.06

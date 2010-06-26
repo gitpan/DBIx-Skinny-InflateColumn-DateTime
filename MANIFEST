@@ -29,9 +29,16 @@ t/102_pre_update_not_affected.t
 t/200_auto_inflate.t
 t/201_auto_pre_insert.t
 t/202_auto_pre_update.t
+t/300_option_timezone.t
+t/301_option_rules.t
+t/302_option_auto_insert_rules.t
+t/303_option_auto_update_rules.t
 t/Mock/Auto.pm
+t/Mock/AutoRules.pm
 t/Mock/DB.pm
+t/Mock/Rules.pm
 t/Mock/SQLite.pm
+t/Mock/TimeZone.pm
 xt/01_podspell.t
 xt/02_perlcritic.t
 xt/03_pod.t
